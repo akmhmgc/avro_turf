@@ -18,7 +18,8 @@ class AvroTurf::ConfluentSchemaRegistry
     client_key_data: nil,
     path_prefix: nil,
     connect_timeout: nil,
-    resolv_resolver: nil
+    resolv_resolver: nil,
+    retry_limit: nil
   )
     @path_prefix = path_prefix
     @schema_context_prefix = schema_context.nil? ? '' : ":.#{schema_context}:"
@@ -41,6 +42,7 @@ class AvroTurf::ConfluentSchemaRegistry
       resolv_resolver: resolv_resolver
     }
     params.merge!({ connect_timeout: connect_timeout }) if connect_timeout
+    params.merge!({ retry_limit: retry_limit }) if retry_limit
     @connection = Excon.new(
       url,
       params
